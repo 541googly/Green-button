@@ -1,1 +1,62 @@
+{
+  "manifest_version": 3,
+  "name": "Green Thought Bubble",
+  "version": "1.0",
+  "description": "Displays a green thought bubble with 'hi' when 'h' is pressed.",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content.js"],
+      "css": ["src/styles.css"]
+    }
+  ]
+}
+(function () {
+  let bubble = null;
 
+  function createBubble() {
+    bubble = document.createElement('div');
+    bubble.id = 'green-thought-bubble';
+    bubble.textContent = 'hi';
+    document.body.appendChild(bubble);
+  }
+
+  function toggleBubble() {
+    if (!bubble) createBubble();
+    bubble.style.display = bubble.style.display === 'none' ? 'block' : 'none';
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'h') {
+      toggleBubble();
+    }
+  });
+
+  // Initialize bubble hidden
+  createBubble();
+  bubble.style.display = 'none';
+})();#green-thought-bubble {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #2ecc40;
+  color: #fff;
+  padding: 16px 28px;
+  border-radius: 50px 50px 50px 0;
+  font-size: 1.5em;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  z-index: 9999;
+  user-select: none;
+  transition: opacity 0.2s;
+}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Green Thought Bubble Test</title>
+  <link rel="stylesheet" href="../src/styles.css">
+</head>
+<body>
+  <script src="../src/content.js"></script>
+  <p>Press the 'h' key to toggle the green thought bubble.</p>
+</body>
+</html>
