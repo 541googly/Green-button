@@ -2,31 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Download Green Cube Toggle</title>
-</head>
-<body>
-  <h2>Download the Cube Page</h2>
-  <p>
-    <a id="download" download="index.html">⬇️ Click here to download index.html</a>
-  </p>
-
-  <script>
-    // Your cube code content
-    const cubeCode = `<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Press “H” to Toggle Cube</title>
+  <title>Click to Toggle Cube</title>
   <style>
     :root {
       --gap: 16px;
       --cube-size: 80px;
-      --green: #22c55e;
+      --green: #22c55e; /* Tailwind-ish green-500 */
       --shadow: 0 10px 30px rgba(0,0,0,.15);
       --bubble-bg: #fff;
-      --bubble-txt: #111827;
+      --bubble-txt: #111827; /* slate-900 */
     }
+
     .cube-wrap {
       position: fixed;
       right: var(--gap);
@@ -45,6 +32,7 @@
       transform: translateY(0) scale(1);
       pointer-events: auto; 
     }
+
     .cube {
       width: var(--cube-size);
       height: var(--cube-size);
@@ -52,6 +40,7 @@
       border-radius: 12px;
       box-shadow: var(--shadow);
     }
+
     .bubble {
       position: relative;
       background: var(--bubble-bg);
@@ -77,30 +66,33 @@
   </style>
 </head>
 <body>
-  <div class="cube-wrap" id="cube">
-    <div class="bubble">hi is there</div>
-    <div class="cube"></div>
+  <div class="cube-wrap" id="cube" aria-live="polite" aria-hidden="true">
+    <div class="bubble" role="status">hi is there</div>
+    <div class="cube" aria-label="Green cube"></div>
   </div>
+
   <script>
     (function () {
       const cubeWrap = document.getElementById('cube');
-      function toggleCube() {
-        cubeWrap.classList.toggle('visible');
+
+      function toggleCube(show) {
+        const willShow = typeof show === 'boolean' ? show : !cubeWrap.classList.contains('visible');
+        cubeWrap.classList.toggle('visible', willShow);
+        cubeWrap.setAttribute('aria-hidden', willShow ? 'false' : 'true');
       }
-      window.addEventListener('keydown', (evt) => {
-        if (evt.key.toLowerCase() === 'h') {
-          toggleCube();
-        }
+
+      // Toggle cube on *any left click* in the window
+      window.addEventListener('click', function () {
+        toggleCube();
+      });
+
+      // Also allow clicking cube itself to hide (optional)
+      cubeWrap.addEventListener('click', (e) => {
+        e.stopPropagation(); // stop double toggling
+        toggleCube(false);
       });
     })();
   </script>
 </body>
-</html>`;
-
-    // Create a downloadable blob
-    const blob = new Blob([cubeCode], {type: "text/html"});
-    const url = URL.createObjectURL(blob);
-    document.getElementById("download").href = url;
-  </script>
-</body>
 </html>
+
