@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Download Green Cube Toggle</title>
+</head>
+<body>
+  <h2>Download the Cube Page</h2>
+  <p>
+    <a id="download" download="index.html">⬇️ Click here to download index.html</a>
+  </p>
+
+  <script>
+    // Your cube code content
+    const cubeCode = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Press “H” to Toggle Cube</title>
+  <style>
+    :root {
+      --gap: 16px;
+      --cube-size: 80px;
+      --green: #22c55e;
+      --shadow: 0 10px 30px rgba(0,0,0,.15);
+      --bubble-bg: #fff;
+      --bubble-txt: #111827;
+    }
+    .cube-wrap {
+      position: fixed;
+      right: var(--gap);
+      bottom: var(--gap);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 999999;
+      opacity: 0;
+      transform: translateY(8px) scale(.98);
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .cube-wrap.visible { 
+      opacity: 1; 
+      transform: translateY(0) scale(1);
+      pointer-events: auto; 
+    }
+    .cube {
+      width: var(--cube-size);
+      height: var(--cube-size);
+      background: var(--green);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+    .bubble {
+      position: relative;
+      background: var(--bubble-bg);
+      color: var(--bubble-txt);
+      border-radius: 16px;
+      padding: 10px 14px;
+      font: 600 15px/1.2 system-ui, sans-serif;
+      box-shadow: var(--shadow);
+      user-select: none;
+      white-space: nowrap;
+    }
+    .bubble::after {
+      content: "";
+      position: absolute;
+      right: -6px;
+      bottom: 12px;
+      width: 12px;
+      height: 12px;
+      background: var(--bubble-bg);
+      transform: rotate(45deg);
+      box-shadow: 3px 3px 10px rgba(0,0,0,.08);
+    }
+  </style>
+</head>
+<body>
+  <div class="cube-wrap" id="cube">
+    <div class="bubble">hi is there</div>
+    <div class="cube"></div>
+  </div>
+  <script>
+    (function () {
+      const cubeWrap = document.getElementById('cube');
+      function toggleCube() {
+        cubeWrap.classList.toggle('visible');
+      }
+      window.addEventListener('keydown', (evt) => {
+        if (evt.key.toLowerCase() === 'h') {
+          toggleCube();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>`;
+
+    // Create a downloadable blob
+    const blob = new Blob([cubeCode], {type: "text/html"});
+    const url = URL.createObjectURL(blob);
+    document.getElementById("download").href = url;
+  </script>
+</body>
+</html>
